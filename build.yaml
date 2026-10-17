@@ -1,0 +1,4 @@
+include:
+  - board: nice_nano/nrf52840/zmk
+    shield: right_half_test
+    artifact-name: wolfie_right_keys_trackball
