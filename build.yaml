@@ -19,3 +19,8 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_qwerty
+
+  # Stage 4: letter-only matrix + upright static eye + PMW3610.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_keys_eye_pmw_safe wolfie_display_bus wolfie_niceview
+    artifact-name: wolfie_keys_eye_pmw_safe

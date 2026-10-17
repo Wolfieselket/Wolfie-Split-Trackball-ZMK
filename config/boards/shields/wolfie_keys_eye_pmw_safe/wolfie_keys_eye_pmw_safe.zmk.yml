@@ -1,0 +1,9 @@
+file_format: "1"
+id: wolfie_keys_eye_pmw_safe
+name: Wolfie eye + real matrix + PMW3610 (safe key test)
+type: shield
+requires:
+ - nice_nano_v2
+features:
+ - keys
+ - pointer
