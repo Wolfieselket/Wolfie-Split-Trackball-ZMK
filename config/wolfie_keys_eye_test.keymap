@@ -1,0 +1,27 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/*
+ * Temporary ALPHABET-ONLY keymap to test for phantom presses safely.
+ * No modifier, number, special-function, layer, or shortcut keys.
+ * Physical top row (left to right):    X W V U T S
+ * Physical middle row:                R Q P O N M
+ * Physical third row:                 L K J I H G
+ * Physical thumb switches:            F E D C
+ * Matrix row 0 columns 0-1 are not physically populated.
+ * Restore the normal QWERTY keymap only after zero phantom inputs.
+ */
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+            display-name = "KEY TEST";
+            bindings = <
+                &none &none &kp C &kp D &kp E &kp F
+                &kp G &kp H &kp I &kp J &kp K &kp L
+                &kp M &kp N &kp O &kp P &kp Q &kp R
+                &kp S &kp T &kp U &kp V &kp W &kp X
+            >;
+        };
+    };
+};

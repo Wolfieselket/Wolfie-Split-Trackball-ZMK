@@ -1,0 +1,8 @@
+file_format: "1"
+id: wolfie_keys_eye_test
+name: Wolfie keyboard matrix plus display (safe test)
+type: shield
+requires:
+  - nice_nano_v2
+features:
+  - keys

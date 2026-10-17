@@ -8,3 +8,9 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_display_diag wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_display_only_diagnostic
+
+  # Stage 2: real 4x6 matrix and upright static eye; NO PMW3610.
+  # Letter-only keymap prevents Alt/Ctrl/Win shortcuts during fault-finding.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_keys_eye_test wolfie_display_bus wolfie_niceview
+    artifact-name: wolfie_keys_eye_safe_test
