@@ -1,0 +1,2 @@
+config SHIELD_RIGHT_HALF_TEST
+    def_bool $(shields_list_contains,right_half_test)

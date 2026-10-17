@@ -1,0 +1,9 @@
+file_format: "1"
+id: right_half_test
+name: Right Half Matrix + Trackball Test
+type: shield
+requires:
+  - nice_nano_v2
+features:
+  - keys
+  - pointer
