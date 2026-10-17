@@ -1,7 +1,11 @@
 
-name: Build ZMK firmware
+name: Build PMW3610 Test Firmware
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build:

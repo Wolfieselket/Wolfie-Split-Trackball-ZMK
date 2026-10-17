@@ -12,5 +12,8 @@ manifest:
     - name: zmk-pmw3610-driver
       remote: wolfie
       revision: main
+    - name: wolfie-niceview
+      remote: wolfie
+      revision: main
   self:
     path: config
