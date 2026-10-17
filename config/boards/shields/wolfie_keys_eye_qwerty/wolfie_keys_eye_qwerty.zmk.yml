@@ -1,0 +1,8 @@
+file_format: "1"
+id: wolfie_keys_eye_qwerty
+name: Wolfie right QWERTY matrix plus static eye
+type: shield
+requires:
+  - nice_nano_v2
+features:
+  - keys

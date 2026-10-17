@@ -1,0 +1,2 @@
+config SHIELD_WOLFIE_KEYS_EYE_QWERTY
+    def_bool $(shields_list_contains,wolfie_keys_eye_qwerty)

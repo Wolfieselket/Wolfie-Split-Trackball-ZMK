@@ -1,0 +1,41 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/*
+ * Right-hand keyboard, viewed from above, left-to-right:
+ *   Y   U   I   O   P   BSPC
+ *   H   J   K   L   ;   '
+ *   N   M   ,   .   /   ESC
+ *   ENTER LAYER2 RALT (AltGr) NONE (four thumb switches)
+ *
+ * The test showed the scan map is reversed in both axes:
+ * top=XWVUTS, middle=RQPONM, bottom=LKJIHG, thumbs=FEDC.
+ * Positions 0 and 1 of the original 24-key matrix are unwired.
+ */
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+            display-name = "DEFAULT";
+            bindings = <
+                /* Matrix row 0 (scan indices 0..5): two unused then four thumbs in reverse */
+                &none &none &none &kp RALT &mo 1 &kp RET
+                /* Matrix row 1: bottom alphabet row, reverse physical order */
+                &kp ESC &kp FSLH &kp DOT &kp COMMA &kp M &kp N
+                /* Matrix row 2: home row, reverse physical order */
+                &kp SQT &kp SEMI &kp L &kp K &kp J &kp H
+                /* Matrix row 3: top row, reverse physical order */
+                &kp BSPC &kp P &kp O &kp I &kp U &kp Y
+            >;
+        };
+        nav_layer {
+            display-name = "LAYER 2";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &kp RIGHT &kp DOWN &kp UP &kp LEFT
+                &trans &trans &trans &trans &trans &trans
+            >;
+        };
+    };
+};
