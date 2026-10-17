@@ -1,10 +1,10 @@
 include:
-  # Proven working firmware; keep this as the recovery build.
+  # Known-working keyboard+trackball fallback, unchanged.
   - board: nice_nano/nrf52840/zmk
     shield: right_half_test
     artifact-name: wolfie_right_keys_trackball
 
-  # New integration test: original keyboard + trackball plus custom static eye.
+  # NO real key scanner, NO trackball listener. Static custom eye only.
   - board: nice_nano/nrf52840/zmk
-    shield: right_half_test wolfie_display_bus wolfie_niceview
-    artifact-name: wolfie_right_keys_trackball_eye
+    shield: wolfie_display_diag wolfie_display_bus wolfie_niceview
+    artifact-name: wolfie_display_only_diagnostic

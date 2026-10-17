@@ -1,0 +1,5 @@
+file_format: "1"
+id: wolfie_display_diag
+name: Wolfie display diagnostic
+type: shield
+requires: [nice_nano]

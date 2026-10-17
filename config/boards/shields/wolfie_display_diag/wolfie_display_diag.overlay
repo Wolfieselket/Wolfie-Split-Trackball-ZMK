@@ -1,0 +1,29 @@
+/* Display-only diagnostic: no real keyboard matrix or pointing input. */
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,physical-layout = &diag_layout;
+    };
+
+    diag_mock_kscan: diag_mock_kscan {
+        compatible = "zmk,kscan-mock";
+        rows = <1>;
+        columns = <1>;
+        events = <0>;
+    };
+
+    diag_transform: diag_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <1>;
+        columns = <1>;
+        map = <RC(0, 0)>;
+    };
+
+    diag_layout: diag_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Static Display Diagnostic";
+        kscan = <&diag_mock_kscan>;
+        transform = <&diag_transform>;
+    };
+};

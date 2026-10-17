@@ -1,0 +1,6 @@
+if SHIELD_WOLFIE_DISPLAY_DIAG
+
+config ZMK_KEYBOARD_NAME
+    default "Wolfie Eye Test"
+
+endif

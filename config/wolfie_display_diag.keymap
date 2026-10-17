@@ -1,0 +1,11 @@
+#include <behaviors.dtsi>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+            display-name = "Display Test";
+            bindings = <&none>;
+        };
+    };
+};
