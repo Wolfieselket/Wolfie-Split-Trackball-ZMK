@@ -1,46 +1,47 @@
+# Wolfie Split Trackball — individual diagnostic and working builds.
+# Keep this file at the repository root. Use exactly two spaces before each '- board'.
 include:
-  # Known-working keyboard+trackball fallback, unchanged.
+  # Original keyboard + PMW3610 fallback (no display).
   - board: nice_nano/nrf52840/zmk
     shield: right_half_test
     artifact-name: wolfie_right_keys_trackball
 
-  # NO real key scanner, NO trackball listener. Static custom eye only.
+  # Display-only diagnostic.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_display_diag wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_display_only_diagnostic
 
-  # Stage 2: real 4x6 matrix and upright static eye; NO PMW3610.
-  # Letter-only keymap prevents Alt/Ctrl/Win shortcuts during fault-finding.
+  # Keyboard + upright eye, safe letter-only keymap.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_test wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_safe_test
 
-  # Stage 3: QWERTY/AltGr + the proven upright static eye; PMW3610 disabled.
+  # Keyboard QWERTY + upright eye, no PMW3610.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_qwerty
 
-  # Stage 4: letter-only matrix + upright static eye + PMW3610.
+  # Keyboard + upright eye + PMW3610, safe letter-only keymap.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_pmw_safe wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_pmw_safe
 
-  # Stage 5: proven QWERTY/AltGr + upright static eye + PMW3610.
+  # Full working right half — QWERTY/AltGr + eye + PMW3610.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_pmw_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_pmw_qwerty
 
-  # LEFT ONLY: USB matrix test, no nice!view, no trackball.
+  # Left-hand matrix diagnostic.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_matrix_test
     artifact-name: wolfie_left_matrix_test
 
-  # NEW: left-only Corne layout, with layer thumb key disabled.
-  # Keep previously tested left A-X matrix build untouched.
+  # Left-hand Corne-style default layout with None / Win / None / Space thumbs.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_corne
     artifact-name: wolfie_left_corne_no_layer
 
- - board: nice_nano/nrf52840/zmk
+  # Clears stored ZMK settings, including Bluetooth bonding information.
+  - board: nice_nano/nrf52840/zmk
     shield: settings_reset
     artifact-name: wolfie_settings_reset
