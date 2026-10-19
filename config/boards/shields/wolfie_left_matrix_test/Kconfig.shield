@@ -1,0 +1,2 @@
+config SHIELD_WOLFIE_LEFT_MATRIX_TEST
+    def_bool $(shields_list_contains,wolfie_left_matrix_test)

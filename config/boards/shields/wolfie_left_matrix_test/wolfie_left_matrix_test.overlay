@@ -1,0 +1,50 @@
+/*
+ * Wolfie left half: first independent scan of the soldered key matrix.
+ * DIODE: banded side goes to ROW; same col2row setting as tested right.
+ * 6 columns, 4 rows; board nice_nano/nrf52840/zmk.
+ * The GPIO order below is from the user's left-side solder map.
+ * Left nice!view is wired to P0.06 CS, P0.20 SCK, P0.17 MOSI
+ * but is deliberately NOT enabled here.
+ */
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+    wolfie_left_matrix: wolfie_left_matrix {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        row-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        col-gpios = <&gpio0 24 GPIO_ACTIVE_HIGH>,
+                    <&gpio1 0 GPIO_ACTIVE_HIGH>,
+                    <&gpio0 11 GPIO_ACTIVE_HIGH>,
+                    <&gpio1 4 GPIO_ACTIVE_HIGH>,
+                    <&gpio1 6 GPIO_ACTIVE_HIGH>,
+                    <&gpio0 31 GPIO_ACTIVE_HIGH>;
+    };
+
+    wolfie_left_transform: wolfie_left_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <4>;
+        columns = <6>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)
+            RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)
+            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)
+            RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5)
+        >;
+    };
+
+    wolfie_left_layout: wolfie_left_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Left Matrix Test";
+        kscan = <&wolfie_left_matrix>;
+        transform = <&wolfie_left_transform>;
+    };
+
+    chosen {
+        zmk,physical-layout = &wolfie_left_layout;
+    };
+};

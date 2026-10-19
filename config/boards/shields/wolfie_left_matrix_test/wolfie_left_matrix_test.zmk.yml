@@ -1,0 +1,6 @@
+file_format: "1"
+id: wolfie_left_matrix_test
+name: Wolfie left matrix diagnostic
+type: shield
+requires: [nice_nano]
+features: [keys]

@@ -1,0 +1,26 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/*
+ * LEFT ONLY DIAGNOSTIC: literal matrix scanning order, NOT QWERTY.
+ * Matrix row 0: A B C D E F
+ * Matrix row 1: G H I J K L
+ * Matrix row 2: M N O P Q R
+ * Matrix row 3: S T U V W X
+ * Two of the 24 grid positions are physically empty. Left column
+ * colours are mirrored; record actual output before remapping.
+ */
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+            display-name = "LEFT TEST";
+            bindings = <
+                &kp A &kp B &kp C &kp D &kp E &kp F
+                &kp G &kp H &kp I &kp J &kp K &kp L
+                &kp M &kp N &kp O &kp P &kp Q &kp R
+                &kp S &kp T &kp U &kp V &kp W &kp X
+            >;
+        };
+    };
+};

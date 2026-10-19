@@ -29,3 +29,8 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_pmw_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_pmw_qwerty
+
+  # LEFT ONLY: USB matrix test, no nice!view, no trackball.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_left_matrix_test
+    artifact-name: wolfie_left_matrix_test
