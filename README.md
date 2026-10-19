@@ -1,28 +1,9 @@
-# Wolfie Split Trackball ZMK
+# Wolfie Split: right-central Bluetooth name build fix
 
-Right-half integration baseline: 22 working keys and PMW3610 sensor, with no display enabled. Built from the previously tested right-half firmware and current AltGr keymap.
+The right-hand shield configured `Wolfie Trackball` (16 characters), which exceeds the strict Bluetooth device-name limit for this ZMK configuration.
 
-## Build
+This one-line change shortens the central's name to `Wolfie Track` (12 characters). The left peripheral, trackball, matrix and display firmware are unchanged.
 
-GitHub Actions builds `wolfie_right_keys_trackball` for `nice_nano/nrf52840/zmk` with the `right_half_test` shield.
+Copy the `config` directory's contents into the root of `Wolfie-Split-Trackball-ZMK` on the `main` branch. Replace the matching file, commit and push, then confirm both new split builds succeed in GitHub Actions before flashing either board.
 
-## Default physical layout (right half, left to right)
-
-```
-Y  U  I  O  P  Backspace
-H  J  K  L  ;  '
-N  M  ,  .  /  Escape
-Enter  Layer 2 (hold)  AltGr  Disabled
-```
-
-The internal matrix indices are intentionally reversed from the physical layout based on the verified A–X switch test. The layer hold binding is `&mo 1` (layer index 1 is the second layer).
-
-## Hardware
-
-- Right-hand nice!nano; six columns, four rows; 1N4148 diodes oriented cathode toward row, col2row
-- PMW3610 pins: SDIO P0.08, SCK P0.22, CS P0.02, MOT P1.15; 600 CPI with current axes preserved
-- The nice!view is **deliberately disabled** in this baseline; it will be integrated after the keyboard + trackball build is validated.
-
-## Important
-
-This ZIP was assembled from the user's previously tested repository, but has not been compiled. The GitHub Actions result is the first check. Keep the old repository as rollback reference.
+This has not been compiled locally; GitHub Actions is the validation step.
