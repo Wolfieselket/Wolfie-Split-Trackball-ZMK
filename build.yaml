@@ -45,3 +45,13 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: settings_reset
     artifact-name: wolfie_settings_reset
+
+  # New split integration test — right central keeps PMW3610 + custom eye.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    artifact-name: wolfie_split_right_central
+
+  # Left peripheral — 22 keys, no display until split connection is tested.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left
+    artifact-name: wolfie_split_left_peripheral

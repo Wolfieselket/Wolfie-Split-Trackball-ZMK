@@ -1,0 +1,5 @@
+config SHIELD_WOLFIE_SPLIT_RIGHT
+    def_bool $(shields_list_contains,wolfie_split_right)
+
+config SHIELD_WOLFIE_SPLIT_LEFT
+    def_bool $(shields_list_contains,wolfie_split_left)

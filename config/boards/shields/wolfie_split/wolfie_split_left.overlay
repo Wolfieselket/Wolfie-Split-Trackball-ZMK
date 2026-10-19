@@ -1,0 +1,6 @@
+/* Left peripheral shares scanner wiring; left columns are global columns 6..11. */
+#include "wolfie_split.dtsi"
+
+&wolfie_split_transform {
+    col-offset = <6>;
+};

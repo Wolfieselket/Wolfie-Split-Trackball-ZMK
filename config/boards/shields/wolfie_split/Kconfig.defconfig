@@ -1,0 +1,12 @@
+# Right is central because it holds the PMW3610, animated eye and USB host connection.
+if SHIELD_WOLFIE_SPLIT_RIGHT
+config ZMK_KEYBOARD_NAME
+    default "Wolfie Trackball"
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+endif
+
+if SHIELD_WOLFIE_SPLIT_RIGHT || SHIELD_WOLFIE_SPLIT_LEFT
+config ZMK_SPLIT
+    default y
+endif

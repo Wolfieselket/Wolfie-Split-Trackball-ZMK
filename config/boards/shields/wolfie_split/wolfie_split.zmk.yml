@@ -1,0 +1,13 @@
+file_format: "1"
+id: wolfie_split
+name: Wolfie Split Trackball
+type: shield
+requires:
+  - nice_nano_v2
+features:
+  - keys
+  - display
+  - pointer
+siblings:
+  - wolfie_split_left
+  - wolfie_split_right
