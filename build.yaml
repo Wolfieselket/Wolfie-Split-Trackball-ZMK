@@ -55,3 +55,8 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_split_left
     artifact-name: wolfie_split_left_peripheral
+
+  # Stage 1 left nice!view: keeps working 22-key BLE peripheral, adds static WOLFIE L.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left wolfie_display_bus wolfie_leftview
+    artifact-name: wolfie_split_left_display_test
