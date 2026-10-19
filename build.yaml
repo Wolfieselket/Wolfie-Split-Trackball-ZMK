@@ -40,3 +40,7 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_corne
     artifact-name: wolfie_left_corne_no_layer
+
+ - board: nice_nano/nrf52840/zmk
+    shield: settings_reset
+    artifact-name: wolfie_settings_reset
