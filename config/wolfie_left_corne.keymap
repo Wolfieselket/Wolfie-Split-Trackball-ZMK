@@ -1,0 +1,38 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/*
+ * LEFT HALF (physical, left to right)
+ *   TAB  Q  W  E  R  T
+ *   LSHIFT A  S  D  F  G
+ *   LCTRL  Z  X  C  V  B
+ *   NONE  LGUI  NONE  SPACE
+ *
+ * Wiring verified using A-X test:
+ *   top:       S T U V W X = scan matrix row 3, columns 0..5
+ *   middle:    M N O P Q R = scan matrix row 2, columns 0..5
+ *   third:     G H I J K L = scan matrix row 1, columns 0..5
+ *   four thumbs: C D E F   = scan matrix row 0, columns 2..5
+ *   matrix positions row0 col0 and col1 are unwired.
+ *
+ * The user requested the thumb row NONE / WIN / NONE / SPACE.
+ * No active alternate layers in this standalone build.
+ */
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+            display-name = "QWERTY";
+            bindings = <
+                /* scan row 0, thumb C D E F after two unwired positions */
+                &none &none &none &kp LGUI &none &kp SPACE
+                /* scan row 1: third physical row */
+                &kp LCTRL &kp Z &kp X &kp C &kp V &kp B
+                /* scan row 2: second physical row */
+                &kp LSHFT &kp A &kp S &kp D &kp F &kp G
+                /* scan row 3: top physical row */
+                &kp TAB &kp Q &kp W &kp E &kp R &kp T
+            >;
+        };
+    };
+};
