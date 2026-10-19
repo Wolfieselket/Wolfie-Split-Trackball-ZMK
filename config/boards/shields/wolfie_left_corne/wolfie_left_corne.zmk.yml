@@ -1,0 +1,6 @@
+file_format: "1"
+id: wolfie_left_corne
+name: Wolfie Left Corne Default (No Layer)
+type: shield
+requires: [nice_nano]
+features: [keys]

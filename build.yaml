@@ -34,3 +34,9 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_matrix_test
     artifact-name: wolfie_left_matrix_test
+
+  # NEW: left-only Corne layout, with layer thumb key disabled.
+  # Keep previously tested left A-X matrix build untouched.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_left_corne
+    artifact-name: wolfie_left_corne_no_layer
