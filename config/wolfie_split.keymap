@@ -1,43 +1,86 @@
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
-
-/* Global 44-key layout, physical rows from left to right (left 6, right 6).
- * Left 4 thumbs: none, Windows, none, Space.
- * Right 4 thumbs: Enter, momentary Layer 2, AltGr, none.
- * Combined transform already reverses the physical rows / columns so the
- * bindings below are natural physical left-to-right order.
+/*
+ * Wolfie Split Trackball — 44-key test keymap
+ * Adapted from the Corne Choc Pro keymap for the Wolfie 44-position layout.
+ *
+ * Layer 0: QWERTY (default)
+ * Layer 1: Sym, Num, Arr (momentary: &mo 1)
+ * Layer 2: Functions (momentary: &mo 2)
+ * Layer 3: Mouse (momentary: &mo 3)
+ * Layer 4: Gaming (toggle: &tog 4 from Mouse, toggle off on Gaming)
+ *
+ * Key positions: three rows of 12 and eight thumbs (44 total).
+ * Keep wolfie_split.dtsi and the existing trackball/display files unchanged.
+ * Physical switch mapping must be confirmed on the keyboard after flashing.
  */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
+
 / {
     keymap {
         compatible = "zmk,keymap";
+
         default_layer {
             display-name = "QWERTY";
+
+            /* Each of rows 0-2: 6 left keys, then 6 right keys.
+             * Thumbs: 4 left keys, then 4 right keys. */
+
             bindings = <
-                /* TOP: left 6 then right 6 */
-                &kp TAB &kp Q &kp W &kp E &kp R &kp T
-                &kp Y &kp U &kp I &kp O &kp P &kp BSPC
-                /* HOME */
-                &kp LSHFT &kp A &kp S &kp D &kp F &kp G
-                &kp H &kp J &kp K &kp L &kp SEMI &kp SQT
-                /* BOTTOM */
-                &kp LCTRL &kp Z &kp X &kp C &kp V &kp B
-                &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp ESC
-                /* THUMBS */
-                &none &kp LGUI &none &kp SPACE
-                &kp RET &mo 1 &kp RALT &none
+&kp TAB           &kp Q  &kp W  &kp E     &kp R  &kp T      &kp Y    &kp U  &kp I      &kp O       &kp P     &kp BSPC
+&kp LEFT_SHIFT    &kp A  &kp S  &kp D     &kp F  &kp G      &kp H    &kp J  &kp K      &kp L       &kp SEMI  &kp SQT
+&kp LEFT_CONTROL  &kp Z  &kp X  &kp C     &kp V  &kp B      &kp N    &kp M  &kp COMMA  &kp PERIOD  &kp FSLH  &kp ESCAPE
+                         &none  &kp LGUI  &mo 1  &kp SPACE  &kp RET  &mo 2  &kp LALT   &mo 3
             >;
         };
-        nav_layer {
-            display-name = "Function";
+
+        lower_layer {
+            display-name = "Sym, Num, Arr";
+
+            /* Each of rows 0-2: 6 left keys, then 6 right keys.
+             * Thumbs: 4 left keys, then 4 right keys. */
+
             bindings = <
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &kp LEFT &kp UP &kp DOWN &kp RIGHT &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans
-                &trans &trans &trans &trans
+&kp TAB           &kp C_PREVIOUS  &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_MUTE  &none      &kp N7        &kp N8        &kp N9        &kp N0      &kp EQUAL     &kp BSPC
+&kp LEFT_SHIFT    &kp BACKSLASH   &kp UNDER         &kp DEL     &none       &kp MINUS  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &kp PERIOD  &kp UP_ARROW  &kp BACKSLASH
+&kp LEFT_CONTROL  &none           &none             &none       &none       &none      &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT    &kp DOWN      &kp RIGHT
+                                  &none             &kp LGUI    &trans      &kp SPACE  &kp RET       &trans        &kp LEFT_ALT  &none
+            >;
+        };
+
+        raise_layer {
+            display-name = "Functions";
+
+            /* Each of rows 0-2: 6 left keys, then 6 right keys.
+             * Thumbs: 4 left keys, then 4 right keys. */
+
+            bindings = <
+&kp TAB           &kp F11  &kp F12  &none     &kp NON_US_BACKSLASH  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1     &bt BT_SEL 2  &bt BT_SEL 3  &none  &none
+&kp LEFT_SHIFT    &kp F6   &kp F7   &kp F8    &kp F9                &kp F10     &kp CAPS      &kp PRINTSCREEN  &kp PG_UP     &kp HOME      &none  &none
+&kp LEFT_CONTROL  &kp F1   &kp F2   &kp F3    &kp F4                &kp F5      &none         &none            &kp PG_DN     &kp END       &none  &none
+                           &none    &kp LGUI  &trans                &kp SPACE   &kp RET       &trans           &kp LEFT_ALT  &none
+            >;
+        };
+
+        layer_3 {
+            display-name = "Mouse";
+            bindings = <
+&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &none  &none
+&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &none  &none
+&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &none  &none
+                         &tog 4  &kp LGUI  &mo 1  &kp SPACE  &kp RET    &mo 2     &kp LALT   &mo 3
+            >;
+        };
+
+        layer_4 {
+            display-name = "Gaming";
+            bindings = <
+&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &kp NUMBER_1  &kp NUMBER_2
+&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &kp NUMBER_3  &kp NUMBER_4
+&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &kp N5        &kp NUMBER_6
+                         &tog 4  &kp LGUI  &mo 1  &kp SPACE  &kp RET    &mo 2     &kp LALT   &mo 3
             >;
         };
     };
