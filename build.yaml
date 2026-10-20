@@ -10,7 +10,6 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_display_diag wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_display_only_diagnostic
-
   # Keyboard + upright eye, safe letter-only keymap.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_test wolfie_display_bus wolfie_niceview
@@ -20,7 +19,6 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_qwerty
-
   # Keyboard + upright eye + PMW3610, safe letter-only keymap.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_pmw_safe wolfie_display_bus wolfie_niceview
@@ -30,7 +28,6 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_keys_eye_pmw_qwerty wolfie_display_bus wolfie_niceview
     artifact-name: wolfie_keys_eye_pmw_qwerty
-
   # Left-hand matrix diagnostic.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_matrix_test
@@ -40,7 +37,6 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_left_corne
     artifact-name: wolfie_left_corne_no_layer
-
   # Clears stored ZMK settings, including Bluetooth bonding information.
   - board: nice_nano/nrf52840/zmk
     shield: settings_reset
@@ -49,7 +45,15 @@ include:
   # New split integration test — right central keeps PMW3610 + custom eye.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    # Keep the previously tested display thread priority on the normal build.
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10
     artifact-name: wolfie_split_right_central
+
+  # Bluetooth lag diagnostic — same split right central + PMW3610, NO display.
+  # Do not flash this permanently: it is only for testing input latency over BLE.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right
+    artifact-name: wolfie_split_right_no_display
 
   # Left peripheral — 22 keys, no display until split connection is tested.
   - board: nice_nano/nrf52840/zmk
