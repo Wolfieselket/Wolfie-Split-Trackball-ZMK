@@ -1,4 +1,4 @@
-o/* Right central uses the proven PMW3610 SPI0 setup.
+/* Right central uses the proven PMW3610 SPI0 setup.
  * wolfie_display_bus + wolfie_niceview shields add the working SPI1 eye.
  */
 #include "wolfie_split.dtsi"
