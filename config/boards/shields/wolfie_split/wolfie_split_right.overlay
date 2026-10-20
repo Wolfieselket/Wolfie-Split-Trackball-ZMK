@@ -1,4 +1,4 @@
-/* Right central uses the proven PMW3610 SPI0 setup.
+o/* Right central uses the proven PMW3610 SPI0 setup.
  * wolfie_display_bus + wolfie_niceview shields add the working SPI1 eye.
  */
 #include "wolfie_split.dtsi"
@@ -41,7 +41,7 @@ trackball: trackball@0 {
     reg = <0>;
     spi-max-frequency = <2000000>;
     irq-gpios = <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-    cpi = <800>;
+    cpi = <1200>;
 
     swap-xy;
     invert-x;
