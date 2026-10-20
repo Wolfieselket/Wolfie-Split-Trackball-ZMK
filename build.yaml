@@ -62,6 +62,13 @@ include:
     cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y
     artifact-name: wolfie_split_right_bt75_no_display
 
+  # Controlled BLE test: request 7.5 ms link + 7 ms PMW3610 report minimum.
+  # No display. This is separate from the existing 12 ms BLE diagnostic and normal builds.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right
+    cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7
+    artifact-name: wolfie_split_right_bt75_sensor7_no_display
+
   # Left peripheral — 22 keys, no display until split connection is tested.
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_split_left
