@@ -1,51 +1,63 @@
-# Wolfie right half — Bluetooth-lag diagnostic without nice!view
+# Wolfie: 7.5 ms Bluetooth host connection interval test (no display)
 
-## IMPORTANT
+This package changes **only `build.yaml`** in your **Wolfie-Split-Trackball-ZMK** repo.
+It adds one separate diagnostic build, without replacing your working normal firmware,
+existing no-display baseline, keymap, trackball overlay, or either nice!view module.
 
-Extract this ZIP into your **Wolfie-Split-Trackball-ZMK** repository root,
-**NOT** wolfie-niceview. Merge/replace the files. It changes two files only:
+## Installation with GitHub Desktop
 
-- `build.yaml` (adds a no-display right-central build, preserves all prior builds)
-- `config/boards/shields/wolfie_split/wolfie_split_right.conf`
-  (moves display thread priority 10 out of shared .conf and into the normal
-  display-enabled build's `cmake-args`; keeps 12 ms PMW3610 report interval)
+1. Open **Wolfie-Split-Trackball-ZMK** on the branch containing the no-display diagnostic.
+2. Extract the ZIP and copy `build.yaml` into the **repository root**, replacing the file.
+3. In GitHub Desktop, verify the ONLY change in `build.yaml` is the new build entry
+   `wolfie_split_right_bt75_no_display` immediately after `wolfie_split_right_no_display`.
+   If you have since made other changes to `build.yaml`, keep them and merge this new
+   entry manually rather than replacing the whole file.
+4. Commit as `Add 7.5ms BLE no-display comparison build` and Push.
+5. Run GitHub Actions in Wolfie-Split-Trackball-ZMK.
+6. Once successful, download the **new** firmware ZIP/artifacts and flash ONLY
+   **`wolfie_split_right_bt75_no_display.uf2`** onto the **right** nice!nano.
+   Do not flash left or any settings-reset UF2.
+7. Unplug USB; leave the left half on; connect Wolfie to Windows over Bluetooth.
+   Wait at least 10-15 seconds before recording MouseTester, because Bluetooth
+   connection parameter updates can occur shortly after connection.
+8. Collect 5-10 seconds of slow continuous trackball movement and send the
+   MouseTester `Interval vs. Time` screenshot for comparison.
 
-Your custom nice!view module, display assets, keymap and other firmware files
-are not modified. The standard `wolfie_split_right_central` build still has
-priority 10, and the no-display diagnostic won't apply this display-only setting.
+## Exact test settings
 
-## Installation using GitHub Desktop
+New build variant only:
 
-1. Open **Wolfie-Split-Trackball-ZMK**, branch `main` (or the active branch).
-2. Extract the ZIP. Copy `build.yaml` and the `config` folder into the root
-   of the repository, merging folders and replacing only the two files above.
-3. Verify GitHub Desktop shows only these two modified files.
-4. Commit as `Add right-half no-display Bluetooth latency diagnostic` and Push.
-5. Wait for GitHub Actions to complete successfully.
-6. Download the NEW artifact `wolfie_split_right_no_display` and flash ONLY
-   `wolfie_split_right_no_display.uf2` to your RIGHT nice!nano. Do not flash
-   left and do not use any `settings_reset` firmware.
-7. Unplug USB; reconnect over Bluetooth. Test slow circular trackball motion
-   and typing using the right-hand keys. Also try turning the left half back on.
-   The right nice!view may retain a static image (memory LCD) but must not
-   animate or refresh during the test.
-8. Compare with your normal `wolfie_split_right_central.uf2` firmware.
-   To restore the full animated right display, flash that normal UF2 back
-   onto the right half, again without resetting Bluetooth settings.
+```
+CONFIG_BT_PERIPHERAL_PREF_MIN_INT=6
+CONFIG_BT_PERIPHERAL_PREF_MAX_INT=6
+CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y
+```
 
-## Diagnostic interpretation
+Bluetooth values are in 1.25 ms units, so 6 = 7.5 ms. Windows may negotiate
+another interval; this is a **request**, not a guaranteed actual connection rate.
+This is for the right half's Bluetooth connection **to Windows**; it does not
+change the radio interval used for the split-left connection.
 
-- Smooth Bluetooth input without the display => display/UI activity is implicated.
-- Jerky input even without the display => focus on BLE HID connection timing,
-  radio coexistence or sensor/report handling rather than animation.
+Your existing `CONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=12` and 1200 CPI
+remain unchanged by this ZIP. Because of the 12 ms movement-batching limit,
+**don't expect 133 mouse reports per second** just from this BLE setting;
+we're testing whether timing and consistency improve.
+
+If available, check the GitHub Actions `Kconfig file` step on this specific
+BT75 job and confirm the resolved values for `CONFIG_BT_PERIPHERAL_PREF_MIN_INT`,
+`CONFIG_BT_PERIPHERAL_PREF_MAX_INT`, and `CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS`.
+
+## Returning to known working versions
+
+- Original no-display test: flash `wolfie_split_right_no_display.uf2`.
+- Working animated eye + BT/layer status: flash `wolfie_split_right_central.uf2`.
+
+These should be taken from a successful build that contains the tested config.
+Neither requires a Bluetooth settings reset. Leave the left firmware untouched.
 
 ## Notes
 
-- The test firmware is **NOT** precompiled. GitHub Actions will compile it.
-- Bluetooth pairing data should remain intact (no settings reset), although
-  reconnection behaviour depends on your existing firmware and host.
-- CPI remains 800 in the pre-existing overlay; the 12 ms sensor interval stays.
-- This preserves the normal working build entry and does not alter display
-  source code, left screen, battery, keymap, or PMW3610 pin assignments.
-- If any other `build.yaml` edits happened since this package was prepared,
-  review differences before replacing it to avoid overwriting newer entries.
+- This is a source-level diagnostic package, **not a precompiled UF2**.
+- We validated ZIP integrity and YAML structure, **not a Zephyr compilation**.
+- If the BT75 firmware causes pairing issues or worsens responsiveness, return
+  to the previous no-display UF2 without clearing bonds.
