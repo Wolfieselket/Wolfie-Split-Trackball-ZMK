@@ -1,0 +1,2 @@
+# No Kconfig defaults needed: this overlay only changes the PMW3610 devicetree.
+# The wolfie_split_right shield retains all central, sensor and input settings.

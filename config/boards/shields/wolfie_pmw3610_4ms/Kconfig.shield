@@ -1,0 +1,2 @@
+config SHIELD_WOLFIE_PMW3610_4MS
+    def_bool $(shields_list_contains,wolfie_pmw3610_4ms)

@@ -73,8 +73,8 @@ include:
   # proven 7 ms PMW3610 report limit and requested 7.5 ms BLE host interval.
   # No right display; original working and earlier diagnostic builds unchanged.
   - board: nice_nano/nrf52840/zmk
-    shield: wolfie_split_right
-    cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7 -DEXTRA_DTC_OVERLAY_FILE=wolfie_pmw3610_4ms.overlay
+    shield: wolfie_split_right wolfie_pmw3610_4ms
+    cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7
     artifact-name: wolfie_split_right_bt75_sensor4_awake_no_display
 
   # Left peripheral — 22 keys, no display until split connection is tested.
