@@ -1,53 +1,46 @@
-# Wolfie — Animated eye + optimised Bluetooth test
+# Wolfie — Sleep / wake-up diagnostic (30-second idle, 60-minute deep sleep)
 
-This ZIP adds **one** new right-central firmware target to the existing `build.yaml`.
-It is based on the working `Wolfie-BLE-Notify-Priority-4-Test.zip` build file.
-It does not change existing targets or touch nice!view source files, the keymap,
-physical sensor overlay, left half, battery screens or pairing settings.
+This is an **uncompiled source-only test**. It adds precisely TWO firmware build targets to the previously proven full-display/smooth-BLE `build.yaml`. No source files, graphics, keymaps, sensor overlay, Bluetooth pairings or existing builds are changed.
 
-## Install through GitHub Desktop
+## Settings, applied to BOTH new targets only
+- CONFIG_ZMK_IDLE_TIMEOUT=30000: regular idle after ~30 seconds of inactivity.
+- CONFIG_ZMK_SLEEP=y: enable deep sleep if supported by the board.
+- CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=3600000: deep sleep after ~60 minutes of inactivity.
 
-1. Open **Wolfie-Split-Trackball-ZMK**, NOT **wolfie-niceview**.
-2. Extract this ZIP; copy **build.yaml** to the root of the repository.
-3. In GitHub Desktop, inspect the diff BEFORE committing. The only intended
-   change is the new block `RIGHT full-display performance test` and its
-   `wolfie_split_right_bt75_sensor7_bleprio4_display` artifact.
-   If your build.yaml has other new edits, add ONLY that one new block manually
-   rather than overwriting your newer entries.
-4. Commit: `Test animated eye with optimized Bluetooth timing` and push.
-5. Run a new GitHub Actions firmware build and wait for green SUCCESS.
-6. Download the NEW artifact and flash only the RIGHT nice!nano with:
-   **wolfie_split_right_bt75_sensor7_bleprio4_display.uf2**
-7. Keep the left keyboard firmware unchanged. Do NOT use settings_reset.
+## Added build artifacts
+- RIGHT nice!nano (central): `wolfie_split_right_sleep_60m.uf2`
+  - Same `wolfie_split_right wolfie_display_bus wolfie_niceview` combination as the known-good smooth firmware.
+  - Retains preferred BT 7.5 ms, sensor report min 7 ms, BLE priority 4, display priority 10.
+  - Uses the current `wolfie-niceview` module for eye, status and BT1 CPI 400/others 1000. That module must remain on your known-good revision.
+- LEFT nice!nano (peripheral): `wolfie_split_left_sleep_60m.uf2`
+  - Same `wolfie_split_left wolfie_display_bus wolfie_leftview` combination as the functioning left space scene.
 
-## Exactly what this target enables
+## Install with GitHub Desktop
+1. Create a backup branch of **Wolfie-Split-Trackball-ZMK** at your known-good smooth-Bluetooth commit (e.g. `working-profile-cpi-optimized`). Do not edit it.
+2. Return to your normal working development branch (usually `main`) in GitHub Desktop. Check you are in **Wolfie-Split-Trackball-ZMK**, NOT **wolfie-niceview**.
+3. Extract this ZIP. Copy its **build.yaml** into the repository root and inspect the GitHub Desktop diff BEFORE committing.
+   - Intended changes: exactly TWO NEW blocks near the end (one right sleep target, one left sleep target).
+   - If you have newer/different build.yaml entries already, DO NOT replace them: copy ONLY those two new blocks from the included `ADDED-BUILD-ENTRIES.txt` into your existing build.yaml, under the `include:` list.
+4. Commit `Add isolated 30s idle 60m sleep tests for both halves` and Push.
+5. Build in GitHub Actions; do not flash a failed or old artifact.
+6. Download the NEW zip with UF2 firmware artifacts. Flash `wolfie_split_right_sleep_60m.uf2` to the RIGHT half and `wolfie_split_left_sleep_60m.uf2` to the LEFT half, one at a time, checking operation in between.
+7. Do NOT flash `settings_reset`; keep your BLE bonds intact.
 
-- Right shield: `wolfie_split_right wolfie_display_bus wolfie_niceview`.
-  This loads the existing working animated eye, combined BT/layer status,
-  battery percentage and USB indicator from the wolfie-niceview module.
-- Bluetooth notification-worker priority: `CONFIG_ZMK_BLE_THREAD_PRIORITY=4`.
-- Preferred BLE host connection interval: min/max=6 (7.5 ms requested).
-  Host may negotiate other parameters.
-- BLE automatic parameter updates: `CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y`.
-- PMW3610 minimum report interval: 7 ms.
-- Display work priority: 10 (the same priority as the original normal build).
-- Trackball CPI: NOT changed by this ZIP. Your overlay presently uses 1200 CPI.
-- Normal PMW3610 sampling: NO 4 ms force-awake shield in this target.
+## Hardware test procedure
+1. Check both halves type, trackball moves smoothly, both displays and LINK status work, and BT0 vs BT1 (1000 vs 400 CPI) still switches.
+2. Disconnect USB and let both halves sit for ~35 seconds without touching anything. Test the next key and ball movement. Normal idle should be responsive, while the screens may hold an old image due to the memory LCD.
+3. Leave BOTH halves entirely untouched and on battery for at least 65 minutes. Avoid moving the trackball or touching keys. If Bluetooth disconnects after an hour, that's consistent with deep sleep.
+4. Press a RIGHT-side key to wake the central, wait for host BLE to reconnect, then press a LEFT-side key to wake the peripheral and check typing from both halves. Test PMW3610, correct BT1 400-CPI mapping, battery updates and both screens.
+5. If a half cannot wake, try its reset button/power-cycle. Restore known-good firmware rather than repeatedly changing parameters. If both halves use on/off switches, charging while testing can change the power-state behavior; test on battery.
 
-## How to compare
+## Restore (no bond reset)
+- RIGHT: `wolfie_split_right_bt75_sensor7_bleprio4_display.uf2` from the previously successful build.
+- LEFT: `wolfie_split_left_display_test.uf2` from its previous successful build.
+Keep those firmware files handy BEFORE starting the hour-long test.
 
-1. Confirm eye animates, battery and `WOLFIE R` show correctly, and BT / layer
-   status work as they did before.
-2. Test continuous Bluetooth cursor movement for 20–30 seconds, then capture
-   MouseTester > Interval vs Time and describe whether the cursor remains smooth.
-3. If enabling the display makes jitter return, flash the known-good no-display
-   target `wolfie_split_right_bt75_sensor7_bleprio4_no_display.uf2` from a
-   successful build. That isolates display workload from the BLE settings.
-4. If the new full-display firmware performs well, we can consider promoting
-   these settings to the normal build in a separate, later change.
-
-## Limitations
-
-The ZIP and YAML are structurally validated here, but ZMK compilation and
-behaviour on your hardware have not been verified. The target is a diagnostic;
-its speed, animation consistency and power draw require on-device testing.
+## Caution / limitations
+- Firmware was NOT compiled here. Zephyr/ZMK configuration support is determined in GitHub Actions.
+- A wakeup-source property on keyboard kscan is needed; Wolfie's shared matrix was previously reported to include `wakeup-source;`. On actual hardware, wake from a physical key is safer to test than relying on trackball movement.
+- Deep sleep intentionally disconnects BLE and can take several seconds to wake and reconnect. It is not expected to retain live display animation; the nice!view may retain a static image.
+- Firmware and hardware versions can cause deep-sleep wake problems, especially on custom split centrals. Do not leave it unattended overnight until a complete wake-and-reconnect test has passed.
+- Display and PMW3610 low-power behavior are not guaranteed solely by these options; battery drain requires actual testing after wake reliability is confirmed.

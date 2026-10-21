@@ -1,0 +1,15 @@
+
+  # TEST ONLY: 30 s idle, 60 min deep sleep — optimized RIGHT central + full nice!view.
+  # Preserves 7.5 ms BLE request, 7 ms PMW3610 batching, BLE priority 4,
+  # existing keymap, eye + battery/BT/layer status, and profile-specific CPI.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=30000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=3600000
+    artifact-name: wolfie_split_right_sleep_60m
+
+  # TEST ONLY: 30 s idle, 60 min deep sleep — LEFT peripheral + full nice!view.
+  # Retains space artwork, battery and LINK indicator.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left wolfie_display_bus wolfie_leftview
+    cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=30000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=3600000
+    artifact-name: wolfie_split_left_sleep_60m
