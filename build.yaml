@@ -132,3 +132,12 @@ include:
     shield: wolfie_split_left wolfie_display_bus wolfie_leftview
     cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
     artifact-name: wolfie_split_left_sleep_20m
+
+    
+  # TEST ONLY: PMW3610 12ms report interval.
+  # Same Bluetooth, display and sleep settings as the working 20m build.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=12 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: wolfie_split_right_sensor12_sleep_20m
+
