@@ -46,7 +46,7 @@ include:
   - board: nice_nano/nrf52840/zmk
     shield: wolfie_split_right wolfie_display_bus wolfie_niceview
     # Keep the previously tested display thread priority on the normal build.
-    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
     artifact-name: wolfie_split_right_central
 
   # Bluetooth lag diagnostic — same split right central + PMW3610, NO display.
