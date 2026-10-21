@@ -69,6 +69,14 @@ include:
     cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7
     artifact-name: wolfie_split_right_bt75_sensor7_no_display
 
+  # Bluetooth HID notification scheduling test: raise BLE notify worker priority
+  # from ZMK default 5 to 4. Same proven sensor7+BT7.5 settings; NO display.
+  # Keep this separate so the previous sensor7 test stays available.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right
+    cmake-args: -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4
+    artifact-name: wolfie_split_right_bt75_sensor7_bleprio4_no_display
+
   # Diagnostic only: faster 4 ms PMW3610 sampling in ACTIVE state, with the
   # proven 7 ms PMW3610 report limit and requested 7.5 ms BLE host interval.
   # No right display; original working and earlier diagnostic builds unchanged.

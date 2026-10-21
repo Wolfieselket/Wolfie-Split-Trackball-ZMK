@@ -1,45 +1,55 @@
-Wolfie PMW3610 4 ms diagnostic - missing overlay path fix
-===========================================================
+# Wolfie: Bluetooth HID Notification Thread Priority 4 Test
 
-WHAT FAILED
-  The previous build.yaml used:
-    -DEXTRA_DTC_OVERLAY_FILE=wolfie_pmw3610_4ms.overlay
-  Zephyr couldn't find that relative path, although the file existed under config/.
-  The previous build therefore never reached firmware compilation.
+This is a NO-DISPLAY diagnostic build for the RIGHT central half ONLY.
 
-WHAT THIS FIX DOES
-  Adds a dedicated diagnostic shield, wolfie_pmw3610_4ms, that Zephyr
-  automatically loads when listed with the existing wolfie_split_right shield.
-  The 4 ms properties are exactly the same as the prior test; the inclusion
-  mechanism is the only change. The normal display firmware is not modified.
+## Purpose
+The best Bluetooth version so far requested a 7.5 ms BLE host interval and used
+PMW3610's 7 ms movement-report minimum. MouseTester showed remaining uneven
+arrival times. USB on the SAME sensor7 build felt consistently smooth.
 
-FILES IN ZIP
-  build.yaml
-  config/boards/shields/wolfie_pmw3610_4ms/Kconfig.shield
-  config/boards/shields/wolfie_pmw3610_4ms/Kconfig.defconfig
-  config/boards/shields/wolfie_pmw3610_4ms/wolfie_pmw3610_4ms.overlay
+This new build keeps the existing settings and changes only the ZMK Bluetooth
+notification worker's priority from default 5 to 4 (higher priority in Zephyr).
+It tests a plausible scheduler bottleneck; improvement is NOT guaranteed.
 
-INSTALL WITH GITHUB DESKTOP
-  1. Open Wolfie-Split-Trackball-ZMK (not wolfie-niceview).
-  2. Make sure you are on the branch with the previous 4 ms diagnostic build.
-  3. Unzip and MERGE build.yaml and the config folder into the repository root.
-  4. GitHub Desktop should show one changed build.yaml and three new shield files.
-  5. Confirm the 4 ms target now says:
-       shield: wolfie_split_right wolfie_pmw3610_4ms
-     and there is NO -DEXTRA_DTC_OVERLAY_FILE=... argument for that target.
-  6. Commit 'Fix 4ms PMW3610 diagnostic overlay' and push.
-  7. Run a NEW GitHub Actions workflow.
-  8. ONLY if successful, flash RIGHT nice!nano with:
-       wolfie_split_right_bt75_sensor4_awake_no_display.uf2
-     Keep the left firmware and both display modules unchanged.
-  9. Compare MouseTester and tell me whether movement feels smoother.
+## Install with GitHub Desktop
+1. Open Wolfie-Split-Trackball-ZMK, not wolfie-niceview.
+2. Make sure your current branch is the one with the previous successful
+   wolfie_split_right_bt75_sensor7_no_display diagnostic.
+3. Extract this ZIP and copy build.yaml to the ROOT of your repository.
+4. Inspect GitHub Desktop's diff BEFORE committing. It should add only the
+   new block labeled 'Bluetooth HID notification scheduling test'. If your
+   existing build.yaml has diverged, manually merge ONLY the new block rather
+   than replacing the whole file. The included build.yaml is based on the
+   last 4 ms BUILD-PATH FIX ZIP (which contains the repaired 4 ms shield target).
+5. Commit 'Add BLE notify priority 4 diagnostic' and push.
+6. Run a fresh GitHub Actions build and wait for SUCCESS.
+7. Download fresh artifacts. Flash ONLY the right nice!nano with:
+     wolfie_split_right_bt75_sensor7_bleprio4_no_display.uf2
+   Do not flash the left or a settings-reset firmware.
 
-NOTE
-  You may leave the old config/wolfie_pmw3610_4ms.overlay in the repository:
-  it will no longer be referenced by the test. Optionally remove it later.
-  The normal full-display target and the working 7 ms diagnostic are unmodified.
-  Higher sampling may increase active battery consumption.
+## Recording and comparing
+- Unplug USB and test Windows over Bluetooth; keep the left half ON.
+- Wait 15 seconds after connecting, then test continuous movement for 20-30 s.
+- Capture MouseTester 'Interval vs. Time' and note subjective smoothness.
+- The best prior version is available as:
+     wolfie_split_right_bt75_sensor7_no_display.uf2
+- Compare these under similar conditions. Look especially at 99th-percentile
+  gaps and the frequency of back-to-back (~1 ms) reports.
 
-VALIDATION
-  ZIP structure, YAML parsing, target names, and relative shield-file paths
-  are checked. A full Zephyr build has NOT been run in this environment.
+## Settings in this one new target
+- PMW3610 CPI: unchanged by ZIP (your sensor overlay currently has 1200).
+- Sensor report minimum: CONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7.
+- BLE preferred host interval 7.5ms: MIN_INT=6 MAX_INT=6.
+- Automatic BLE connection parameter update: y.
+- BLE notification worker thread priority: CONFIG_ZMK_BLE_THREAD_PRIORITY=4.
+- No nice!view shield, so eye animation does NOT run.
+- No modifications to normal full-display firmware or the keymap.
+
+## Caveats
+- The OS ultimately negotiates BLE connection parameters, and priority 4
+  does not guarantee a specific polling rate. It might not help or might hurt.
+- Previous 4 ms sensor 'force awake' test made jitter worse; this build DOES NOT
+  enable the 4 ms override shield.
+- Source/YAML/ZIP checked, NOT compiled by GitHub Actions here.
+- If compile output warns about CONFIG_ZMK_BLE_THREAD_PRIORITY, send the first
+  actual error message before making more modifications.
