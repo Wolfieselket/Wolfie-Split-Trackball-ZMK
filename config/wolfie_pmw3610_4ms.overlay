@@ -1,0 +1,9 @@
+/* Diagnostic-only PMW3610 performance override.
+ * EXTRA_DTC_OVERLAY_FILE appends this AFTER the normal wolfie_split_right overlay.
+ * Do not add these properties to the normal right shield: this test increases
+ * sensor sampling / active power use.
+ */
+&trackball {
+    force-awake;
+    force-awake-4ms-mode;
+};

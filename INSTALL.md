@@ -1,40 +1,53 @@
-Wolfie Bluetooth smoothness: 7.5 ms BLE + 7 ms sensor-report test
-===================================================================
+Wolfie Split Trackball - 4 ms Sensor Sampling Diagnostic
+====================================================
 
-This ZIP is for the Wolfie-Split-Trackball-ZMK repository (NOT wolfie-niceview).
+PURPOSE
+  The successful no-display BLE test requested a 7.5 ms host connection
+  interval and used CONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7. MouseTester
+  improved to ~8 ms average but reports still arrived unevenly.
 
-INSTALL
-1. In GitHub Desktop, choose the Wolfie-Split-Trackball-ZMK repository and the branch
-   you used for your previous successful 7.5ms Bluetooth diagnostic build.
-2. Unzip this archive; copy build.yaml into the ROOT of that repository, replacing
-   the existing file. The ZIP contains a complete build.yaml based on the previously
-   supplied 7.5ms diagnostic build; compare in GitHub Desktop before committing,
-   especially if you have added any other build jobs since then.
-3. GitHub Desktop should show ONE modified file: build.yaml.
-4. Commit 'Add 7ms sensor report interval Bluetooth diagnostic' and push.
-5. Run the ZMK GitHub Actions workflow.
-6. Download the freshly built artifact and flash ONLY the right nice!nano:
-      wolfie_split_right_bt75_sensor7_no_display.uf2
-7. Disconnect USB and collect a new MouseTester Interval vs Time graph for Wolfie
-   over Bluetooth. Compare to the previous 7.5ms BLE / 12ms sensor test.
+  This *additional* experimental build keeps those two settings and changes
+  ONLY the PMW3610 active sampling mode via a second overlay:
+    - force-awake;              (keeps PMW3610 in active/run state while ZMK is active)
+    - force-awake-4ms-mode;     (requests a 4 ms sampling period in run mode)
 
-NEW JOB (no-display diagnostic, not a replacement of existing targets):
-  Bluetooth peripheral preferred minimum interval = 6 * 1.25ms = 7.5ms
-  Bluetooth peripheral preferred maximum interval = 6 * 1.25ms = 7.5ms
-  Bluetooth automatic connection parameter update request = enabled
-  PMW3610 minimum report interval = 7ms
-  PMW3610 CPI = existing overlay setting (you previously changed to 1200)
-  Right screen = not enabled in this target; left half unchanged.
+  The driver documents the normal run sampling cadence as 8 ms.
+  Faster sampling can increase battery consumption. A smoother graph is
+  NOT guaranteed, because Bluetooth/HID timing still affects host arrivals.
 
-IMPORTANT:
-- The keyboard's host (Windows) controls the final negotiated BLE interval.
-- The PMW3610 normally samples at ~8ms; a 7ms report ceiling does NOT guarantee
-  7.5ms mouse reports. If this doesn't improve, the separate force-awake 4ms
-  sampling feature may be an option for later testing, with higher power use.
-- This archive has NOT been compiled in GitHub Actions. Verify the new job builds.
-- Other firmware targets in build.yaml were intentionally left unchanged.
-- To revert, flash the previously working right UF2 from your earlier build.
-  For the original display and eye, flash wolfie_split_right_central.uf2.
-- Keep both display repositories and existing paired Bluetooth settings intact.
+INSTALL USING GITHUB DESKTOP
+  1. Select your Wolfie-Split-Trackball-ZMK repository (NOT wolfie-niceview).
+  2. Make sure you are on the branch with the previously working 7.5 ms BLE +
+     7 ms sensor-report diagnostic. Save a backup branch if you prefer.
+  3. Unzip and copy the INCLUDED build.yaml to the repository root,
+     and INCLUDED config/wolfie_pmw3610_4ms.overlay into the config folder.
+     Compare the build.yaml diff before committing, especially if you have
+     added any new targets since the previous test.
+  4. GitHub Desktop should show an updated build.yaml and a NEW file:
+       config/wolfie_pmw3610_4ms.overlay
+     No source-file modifications are required to either display module.
+  5. Commit 'Add 4ms PMW3610 sampling diagnostic' and push.
+  6. Trigger a NEW GitHub Actions firmware build.
+  7. Download the new artifact and flash ONLY onto the RIGHT nice!nano:
+       wolfie_split_right_bt75_sensor4_awake_no_display.uf2
+     (do not flash the left half; do not clear Bluetooth pairings).
+  8. Disconnect USB; allow BLE connection to settle; record 5-10 seconds of
+     steady trackball circles in MouseTester, Interval vs. Time.
+  9. Send the graph and say whether movement feels better, similar, or worse.
 
-If the job fails, send the FIRST build error and the generated command line.
+COMPARISON / ROLLBACK
+  Previous known useful build:
+    wolfie_split_right_bt75_sensor7_no_display.uf2
+  Full display/animated eye firmware:
+    wolfie_split_right_central.uf2
+  You can reflash either previously working UF2 to return to it.
+
+NOTES / LIMITATIONS
+  - Host ultimately determines the BLE interval; these are *requests*.
+  - The sensor report minimum is still 7ms. The driver reports on motion
+    events, not on a synchronized 7.5ms timer, so even 4ms sampling may not
+    produce evenly spaced Bluetooth reports.
+  - This test may increase power draw during ZMK ACTIVE state and is not
+    recommended as permanent firmware until power usage is checked.
+  - Package structure and YAML/overlay syntax inspected. NOT compiled or
+    hardware tested. If CI fails, share the FIRST error from the build log.
