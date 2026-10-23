@@ -6,8 +6,8 @@ manifest:
       url-base: https://github.com/Wolfieselket
   projects:
     - name: zmk
-      remote: zmkfirmware
-      revision: main
+      remote: wolfie
+      revision: wolfie-ble-diag
       import: app/west.yml
     - name: zmk-pmw3610-driver
       remote: wolfie
