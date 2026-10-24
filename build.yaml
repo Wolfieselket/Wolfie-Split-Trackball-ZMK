@@ -149,3 +149,18 @@ include:
     cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=7 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000 -DCONFIG_ZMK_SPLIT_BLE_PREF_INT=12
     artifact-name: wolfie_split_right_split15_sleep_20m
 
+  # WOLFIE STABLE CANDIDATE — clean, full-featured right central.
+  # Adds an independent build; does not modify any tested diagnostic targets.
+  # 1M PHY + 12 ms PMW3610 + 7.5 ms requested host interval + 60s/20min sleep.
+  # IMPORTANT: CPI comes from wolfie_split_right.overlay or runtime code, not this block.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_BT_CTLR_PHY_2M=n -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=12 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: wolfie_split_right_stable_candidate
+
+  # WOLFIE STABLE CANDIDATE — full-display left peripheral.
+  # Same proven idle/deep-sleep values as wolfie_split_left_sleep_20m.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left wolfie_display_bus wolfie_leftview
+    cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: wolfie_split_left_stable_candidate
