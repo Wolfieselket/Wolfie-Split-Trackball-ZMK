@@ -1,19 +1,29 @@
+# Wolfie Split Trackball - Stable v1.0 dependency lock
+# Revisions recovered from tested GitHub Actions run 40088695960.
+#
+# Zephyr was 10ba6d0cb38bc3d258775d27982f707599320085 in that run.
+# It is supplied through ZMK's imported app/west.yml manifest. We do not
+# override the Zephyr project here, to retain ZMK's own module import rules.
 manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: wolfie
       url-base: https://github.com/Wolfieselket
+
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
       import: app/west.yml
+
     - name: zmk-pmw3610-driver
       remote: wolfie
-      revision: main
+      revision: b17dcd34dbf93c79536f01c9ade5886356ffa645
+
     - name: wolfie-niceview
       remote: wolfie
-      revision: wolfie-stable-cpi
+      revision: 30cfa339b04096e2e568ae3418b62c79e5d710f1
+
   self:
     path: config
