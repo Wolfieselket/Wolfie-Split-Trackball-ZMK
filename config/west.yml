@@ -14,6 +14,6 @@ manifest:
       revision: main
     - name: wolfie-niceview
       remote: wolfie
-      revision: main
+      revision: wolfie-stable-cpi
   self:
     path: config
