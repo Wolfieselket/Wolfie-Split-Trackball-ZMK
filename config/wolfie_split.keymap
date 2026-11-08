@@ -10,6 +10,8 @@
  *
  * Key positions: three rows of 12 and eight thumbs (44 total).
  * Keep wolfie_split.dtsi and the existing trackball/display files unchanged.
+ * Cassini left thumbs (face up, left to right): Alt / Win / Space / MO(1).
+ * Mouse/Gaming layers preserve the original leftmost thumb gaming toggle.
  * Physical switch mapping must be confirmed on the keyboard after flashing.
  */
 
@@ -32,7 +34,7 @@
 &kp TAB           &kp Q  &kp W  &kp E     &kp R  &kp T      &kp Y    &kp U  &kp I      &kp O       &kp P     &kp BSPC
 &kp LEFT_SHIFT    &kp A  &kp S  &kp D     &kp F  &kp G      &kp H    &kp J  &kp K      &kp L       &kp SEMI  &kp SQT
 &kp LEFT_CONTROL  &kp Z  &kp X  &kp C     &kp V  &kp B      &kp N    &kp M  &kp COMMA  &kp PERIOD  &kp FSLH  &kp ESCAPE
-                         &none  &kp LGUI  &mo 1  &kp SPACE  &kp RET  &mo 2  &mo 2   &mo 3
+                         &kp LALT  &kp LGUI  &kp SPACE  &mo 1  &kp RET  &mo 2  &mo 2   &mo 3
             >;
         };
 
@@ -46,7 +48,7 @@
 &kp TAB           &kp C_PREVIOUS  &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_MUTE  &none      &kp N7        &kp N8        &kp N9        &kp N0      &kp EQUAL     &kp BSPC
 &kp LEFT_SHIFT    &kp BACKSLASH   &kp UNDER         &kp DEL     &none       &kp MINUS  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &kp PERIOD  &kp UP_ARROW  &kp BACKSLASH
 &kp LEFT_CONTROL  &none           &none             &none       &none       &none      &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT    &kp DOWN      &kp RIGHT
-                                  &none             &kp LGUI    &trans      &kp SPACE  &kp RET       &trans        &trans  &none
+                                  &trans  &trans  &trans  &trans  &kp RET       &trans        &trans  &none
             >;
         };
 
@@ -60,7 +62,7 @@
 &kp TAB           &kp F11  &kp F12  &none     &kp NON_US_BACKSLASH  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1     &bt BT_SEL 2  &bt BT_SEL 3  &none  &none
 &kp LEFT_SHIFT    &kp F6   &kp F7   &kp F8    &kp F9                &kp F10     &kp CAPS      &kp PRINTSCREEN  &kp PG_UP     &kp HOME      &none  &none
 &kp LEFT_CONTROL  &kp F1   &kp F2   &kp F3    &kp F4                &kp F5      &none         &none            &kp PG_DN     &kp END       &none  &none
-                           &none    &kp LGUI  &trans                &kp SPACE   &kp RET       &trans           &trans  &none
+                                  &trans  &trans  &trans  &trans  &kp RET       &trans           &trans  &none
             >;
         };
 
@@ -70,7 +72,7 @@
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &none  &none
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &none  &none
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &none  &none
-                         &tog 4  &kp LGUI  &mo 1  &kp SPACE  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
             >;
         };
 
@@ -80,7 +82,7 @@
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &kp NUMBER_1  &kp NUMBER_2
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &kp NUMBER_3  &kp NUMBER_4
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &kp N5        &kp NUMBER_6
-                         &tog 4  &kp LGUI  &mo 1  &kp SPACE  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
             >;
         };
     };
