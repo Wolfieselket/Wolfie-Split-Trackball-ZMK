@@ -21,11 +21,28 @@
 #include <dt-bindings/zmk/pointing.h>
 
 / {
+    behaviors {
+        /* EC11: clockwise scroll down, counter-clockwise scroll up.
+         * Sensor rotation generates short &msc holds instead of Page Up/Down.
+         * 120 ms gives the wheel time to emit a discrete scroll event.
+         */
+        cassini_scroll: cassini_scroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            tap-ms = <120>;
+        };
+    };
+};
+
+/ {
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             display-name = "QWERTY";
+
+            sensor-bindings = <&cassini_scroll>;
 
             /* Each of rows 0-2: 6 left keys, then 6 right keys.
              * Thumbs: 4 left keys, then 4 right keys. */
@@ -41,6 +58,8 @@
         lower_layer {
             display-name = "Sym, Num, Arr";
 
+            sensor-bindings = <&cassini_scroll>;
+
             /* Each of rows 0-2: 6 left keys, then 6 right keys.
              * Thumbs: 4 left keys, then 4 right keys. */
 
@@ -55,6 +74,8 @@
         raise_layer {
             display-name = "Functions";
 
+            sensor-bindings = <&cassini_scroll>;
+
             /* Each of rows 0-2: 6 left keys, then 6 right keys.
              * Thumbs: 4 left keys, then 4 right keys. */
 
@@ -68,6 +89,8 @@
 
         layer_3 {
             display-name = "Mouse";
+
+            sensor-bindings = <&cassini_scroll>;
             bindings = <
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &none  &none
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &none  &none
@@ -78,6 +101,8 @@
 
         layer_4 {
             display-name = "Gaming";
+
+            sensor-bindings = <&cassini_scroll>;
             bindings = <
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &kp NUMBER_1  &kp NUMBER_2
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &kp NUMBER_3  &kp NUMBER_4
