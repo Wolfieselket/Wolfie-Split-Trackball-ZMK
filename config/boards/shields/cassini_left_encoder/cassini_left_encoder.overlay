@@ -1,0 +1,4 @@
+/* Enable the optional EC11 sensor on the Cassini left peripheral only. */
+&cassini_left_encoder {
+    status = "okay";
+};
