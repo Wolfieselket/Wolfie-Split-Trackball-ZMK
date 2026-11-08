@@ -1,0 +1,6 @@
+file_format: "1"
+id: cassini_left_encoder
+name: Cassini EC11 Left
+requires: [nice_nano]
+features: [encoder]
+type: shield
