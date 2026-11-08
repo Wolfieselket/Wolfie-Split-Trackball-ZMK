@@ -7,8 +7,9 @@
  * Layer 2: Functions (momentary: &mo 2)
  * Layer 3: Mouse (momentary: &mo 3)
  * Layer 4: Gaming (toggle: &tog 4 from Mouse, toggle off on Gaming)
+ * Layer 5: H-SCROLL (encoder push &tog 5, transparent keys)
  *
- * Key positions: three rows of 12 and eight thumbs (44 total).
+ * Key positions: three rows of 12, eight thumbs, and EC11 push (45 total).
  * Keep wolfie_split.dtsi and the existing trackball/display files unchanged.
  * Cassini left thumbs (left to right): Alt / Win / Space / MO(1).
  * Right to left: MO(1) / Space / Win / Alt.
@@ -23,16 +24,24 @@
 
 / {
     behaviors {
-        /* Cassini EC11: retain each scroll press long enough for the
-         * ZMK mouse-scroll generator to emit at least one wheel step.
-         * Default SCRL speed is 10 units/s and the generator ticks every
-         * 16 ms; a 20 ms tap previously yielded no visible wheel event.
-         * If the direction is reversed, swap these two bindings.
+        /* Encoder clockwise now scrolls UP (reversed from earlier).
+         * MOVE_Y(18) vs default 10 gives roughly 80% faster scrolling;
+         * retain the proven 160ms press interval.
          */
-        cassini_scroll: cassini_scroll {
+        cassini_scroll_vertical: cassini_scroll_vertical {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            bindings = <&msc MOVE_Y(18)>, <&msc MOVE_Y(-18)>;
+            tap-ms = <160>;
+        };
+
+        /* Active when the encoder push button toggles layer 5.
+         * Clockwise scrolls right; counterclockwise scrolls left.
+         */
+        cassini_scroll_horizontal: cassini_scroll_horizontal {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc MOVE_X(18)>, <&msc MOVE_X(-18)>;
             tap-ms = <160>;
         };
     };
@@ -51,8 +60,9 @@
 &kp LEFT_SHIFT    &kp A  &kp S  &kp D     &kp F  &kp G      &kp H    &kp J  &kp K      &kp L       &kp SEMI  &kp SQT
 &kp LEFT_CONTROL  &kp Z  &kp X  &kp C     &kp V  &kp B      &kp N    &kp M  &kp COMMA  &kp PERIOD  &kp FSLH  &kp ESCAPE
                          &kp LALT  &kp LGUI  &kp SPACE  &mo 1  &kp RET  &mo 2  &mo 2   &mo 3
+                         &tog 5
             >;
-            sensor-bindings = <&cassini_scroll>;
+            sensor-bindings = <&cassini_scroll_vertical>;
         };
 
         lower_layer {
@@ -66,8 +76,9 @@
 &kp LEFT_SHIFT    &kp BACKSLASH   &kp UNDER         &kp DEL     &none       &kp MINUS  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &kp PERIOD  &kp UP_ARROW  &kp BACKSLASH
 &kp LEFT_CONTROL  &none           &none             &none       &none       &none      &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT    &kp DOWN      &kp RIGHT
                                   &trans  &trans  &trans  &trans  &kp RET       &trans        &trans  &none
+                         &tog 5
             >;
-            sensor-bindings = <&cassini_scroll>;
+            sensor-bindings = <&cassini_scroll_vertical>;
         };
 
         raise_layer {
@@ -81,8 +92,9 @@
 &kp LEFT_SHIFT    &kp F6   &kp F7   &kp F8    &kp F9                &kp F10     &kp CAPS      &kp PRINTSCREEN  &kp PG_UP     &kp HOME      &none  &none
 &kp LEFT_CONTROL  &kp F1   &kp F2   &kp F3    &kp F4                &kp F5      &none         &none            &kp PG_DN     &kp END       &none  &none
                                   &trans  &trans  &trans  &trans  &kp RET       &trans           &trans  &none
+                         &tog 5
             >;
-            sensor-bindings = <&cassini_scroll>;
+            sensor-bindings = <&cassini_scroll_vertical>;
         };
 
         layer_3 {
@@ -92,8 +104,9 @@
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &none  &none
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &none  &none
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 5
             >;
-            sensor-bindings = <&cassini_scroll>;
+            sensor-bindings = <&cassini_scroll_vertical>;
         };
 
         layer_4 {
@@ -103,8 +116,22 @@
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &kp NUMBER_3  &kp NUMBER_4
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &kp N5        &kp NUMBER_6
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 5
             >;
-            sensor-bindings = <&cassini_scroll>;
+            sensor-bindings = <&cassini_scroll_vertical>;
+        };
+
+        scroll_horizontal_layer {
+            display-name = "H-SCROLL";
+            /* Transparent key layer: only scroll axis changes. */
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &tog 5
+            >;
+            sensor-bindings = <&cassini_scroll_horizontal>;
         };
     };
 };

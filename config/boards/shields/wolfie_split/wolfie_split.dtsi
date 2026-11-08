@@ -1,6 +1,6 @@
 /*
  * Wolfie 44-key wireless split. Right nice!nano is central, left peripheral.
- * Shared 44-position transform: logical physical rows (L then R).
+ * Shared 45-position transform (44 keys + left encoder push): logical physical rows (L then R).
  * GPIO connections and diode direction are inherited from tested standalone builds.
  */
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -26,7 +26,7 @@
     wolfie_split_transform: wolfie_split_transform {
         compatible = "zmk,matrix-transform";
         rows = <4>;
-        columns = <12>;
+        columns = <13>;
         map = <
             /* Physical top: left scan row3 c0..5; right row3 c5..0 */
             RC(3,6) RC(3,7) RC(3,8) RC(3,9) RC(3,10) RC(3,11)
@@ -40,6 +40,8 @@
             /* 4 left thumbs then 4 right thumbs */
             RC(0,8) RC(0,9) RC(0,10) RC(0,11)
             RC(0,5) RC(0,4) RC(0,3) RC(0,2)
+            /* Cassini left EC11 push via composite kscan: local col6 + left offset6 */
+            RC(0,12)
         >;
     };
 

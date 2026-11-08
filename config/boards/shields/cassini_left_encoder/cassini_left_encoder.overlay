@@ -1,7 +1,39 @@
 /* Cassini left EC11: A=P0.08, B=P0.22, common=GND.
- * Optional push contacts (SW1=P0.02, SW2=GND) stay unassigned.
+ * Push contacts (SW1=P0.02, SW2=GND) toggle scrolling direction axis.
  * The same sensor remains disabled on the right central.
  */
 &cassini_ec11 {
     status = "okay";
+};
+
+/ {
+    /* Encoder push is a separate active-low direct GPIO key on the left. */
+    cassini_encoder_push_kscan: cassini_encoder_push_kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        wakeup-source;
+    };
+
+    /* Merge existing 4x6 matrix with one additional push key at local (0,6). */
+    cassini_left_kscan: cassini_left_kscan {
+        compatible = "zmk,kscan-composite";
+        rows = <4>;
+        columns = <7>;
+        wakeup-source;
+
+        matrix {
+            kscan = <&wolfie_split_kscan>;
+        };
+        encoder_push {
+            kscan = <&cassini_encoder_push_kscan>;
+            col-offset = <6>;
+        };
+    };
+};
+
+/* Keep the entire existing key matrix, adding only this push key.
+ * Left transform adds another 6 to local col6 -> global col12.
+ */
+&wolfie_split_layout {
+    kscan = <&cassini_left_kscan>;
 };

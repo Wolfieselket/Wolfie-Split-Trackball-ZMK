@@ -178,3 +178,15 @@ include:
     shield: wolfie_split_right wolfie_display_bus wolfie_niceview
     cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_BT_CTLR_PHY_2M=n -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=12 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
     artifact-name: cassini_split_right_encoder_central_test
+
+  # CASSINI SCROLL AXIS TEST — EC11 push toggles horizontal/vertical, rotation reversed + faster.
+  # Both halves must flash matching 45-position transforms from this branch.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left wolfie_display_bus wolfie_leftview cassini_left_encoder
+    cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: cassini_split_left_scroll_toggle_test
+
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_right wolfie_display_bus wolfie_niceview
+    cmake-args: -DCONFIG_ZMK_DISPLAY_DEDICATED_THREAD_PRIORITY=10 -DCONFIG_BT_PERIPHERAL_PREF_MIN_INT=6 -DCONFIG_BT_PERIPHERAL_PREF_MAX_INT=6 -DCONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS=y -DCONFIG_BT_CTLR_PHY_2M=n -DCONFIG_PMW3610_ALT_REPORT_INTERVAL_MIN=12 -DCONFIG_ZMK_BLE_THREAD_PRIORITY=4 -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: cassini_split_right_scroll_toggle_test
