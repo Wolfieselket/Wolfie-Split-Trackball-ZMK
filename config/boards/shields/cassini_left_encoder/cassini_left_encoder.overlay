@@ -1,0 +1,7 @@
+/* Cassini left EC11: A=P0.08, B=P0.22, common=GND.
+ * Optional push contacts (SW1=P0.02, SW2=GND) stay unassigned.
+ * The same sensor remains disabled on the right central.
+ */
+&cassini_ec11 {
+    status = "okay";
+};

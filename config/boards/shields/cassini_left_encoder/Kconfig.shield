@@ -1,0 +1,2 @@
+config SHIELD_CASSINI_LEFT_ENCODER
+    def_bool $(shields_list_contains,cassini_left_encoder)

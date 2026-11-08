@@ -22,6 +22,18 @@
 #include <dt-bindings/zmk/pointing.h>
 
 / {
+    behaviors {
+        /* One short mouse-wheel scroll pulse per encoder step.
+         * If the direction is reversed, swap these two bindings.
+         */
+        cassini_scroll: cassini_scroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            tap-ms = <20>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -37,6 +49,7 @@
 &kp LEFT_CONTROL  &kp Z  &kp X  &kp C     &kp V  &kp B      &kp N    &kp M  &kp COMMA  &kp PERIOD  &kp FSLH  &kp ESCAPE
                          &kp LALT  &kp LGUI  &kp SPACE  &mo 1  &kp RET  &mo 2  &mo 2   &mo 3
             >;
+            sensor-bindings = <&cassini_scroll>;
         };
 
         lower_layer {
@@ -51,6 +64,7 @@
 &kp LEFT_CONTROL  &none           &none             &none       &none       &none      &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT    &kp DOWN      &kp RIGHT
                                   &trans  &trans  &trans  &trans  &kp RET       &trans        &trans  &none
             >;
+            sensor-bindings = <&cassini_scroll>;
         };
 
         raise_layer {
@@ -65,6 +79,7 @@
 &kp LEFT_CONTROL  &kp F1   &kp F2   &kp F3    &kp F4                &kp F5      &none         &none            &kp PG_DN     &kp END       &none  &none
                                   &trans  &trans  &trans  &trans  &kp RET       &trans           &trans  &none
             >;
+            sensor-bindings = <&cassini_scroll>;
         };
 
         layer_3 {
@@ -75,6 +90,7 @@
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &none  &none
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
             >;
+            sensor-bindings = <&cassini_scroll>;
         };
 
         layer_4 {
@@ -85,6 +101,7 @@
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &kp N5        &kp NUMBER_6
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
             >;
+            sensor-bindings = <&cassini_scroll>;
         };
     };
 };

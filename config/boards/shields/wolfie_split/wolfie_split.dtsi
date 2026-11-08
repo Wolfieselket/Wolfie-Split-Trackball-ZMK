@@ -43,6 +43,25 @@
         >;
     };
 
+    /* Cassini left EC11: physically connected A=P0.08, B=P0.22, common=GND.
+     * The right central shares the sensor index for BLE event forwarding,
+     * but never initializes the physical encoder on the right half.
+     * Only cassini_left_encoder shield enables this on SXR-02-L.
+     */
+    cassini_ec11: cassini_left_encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "disabled";
+    };
+
+    cassini_sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&cassini_ec11>;
+        triggers-per-rotation = <20>;
+    };
+
     physical_layouts {
         compatible = "zmk,physical-layouts";
         wolfie_split_layout: wolfie_split_layout {
