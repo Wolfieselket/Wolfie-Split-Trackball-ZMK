@@ -23,14 +23,17 @@
 
 / {
     behaviors {
-        /* One short mouse-wheel scroll pulse per encoder step.
+        /* Cassini EC11: retain each scroll press long enough for the
+         * ZMK mouse-scroll generator to emit at least one wheel step.
+         * Default SCRL speed is 10 units/s and the generator ticks every
+         * 16 ms; a 20 ms tap previously yielded no visible wheel event.
          * If the direction is reversed, swap these two bindings.
          */
         cassini_scroll: cassini_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <20>;
+            tap-ms = <160>;
         };
     };
 
