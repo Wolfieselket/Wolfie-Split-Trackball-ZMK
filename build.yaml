@@ -164,3 +164,11 @@ include:
     shield: wolfie_split_left wolfie_display_bus wolfie_leftview
     cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
     artifact-name: wolfie_split_left_stable_candidate
+
+  # CASSINI DEV ONLY: left BLE peripheral + EC11 scroll encoder.
+  # This target assumes encoder A=P0.02 (F6), B=P1.15 (F7), C=GND.
+  # Verify the actual wiring before flashing; stable left target remains intact.
+  - board: nice_nano/nrf52840/zmk
+    shield: wolfie_split_left wolfie_display_bus wolfie_leftview cassini_left_encoder
+    cmake-args: -DCONFIG_ZMK_IDLE_TIMEOUT=60000 -DCONFIG_ZMK_SLEEP=y -DCONFIG_ZMK_IDLE_SLEEP_TIMEOUT=1200000
+    artifact-name: cassini_split_left_encoder_test
