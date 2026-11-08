@@ -54,3 +54,29 @@
     };
     chosen { zmk,physical-layout = &wolfie_split_layout; };
 };
+
+
+/*
+ * Cassini optional left EC11. Both halves know its sensor position, but
+ * the device is disabled by default. The opt-in cassini_left_encoder shield
+ * enables it on SXR-02-L only.
+ *
+ * Proposed encoder pins (NOT verified against physical wiring):
+ *   A = P0.02 / F6 ; B = P1.15 / F7 ; C = GND
+ * Push switch is not used.
+ */
+/ {
+    cassini_left_encoder: cassini_left_encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "disabled";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&cassini_left_encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
