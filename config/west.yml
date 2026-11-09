@@ -23,7 +23,7 @@ manifest:
 
     - name: wolfie-niceview
       remote: wolfie
-      revision: 7f0ed6bfec64d7eee6b1f6637dd9ec0f8830fca8
+      revision: 607c8936a4ba181e190332041dd85b33d7172df7
 
   self:
     path: config
