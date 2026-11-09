@@ -13,7 +13,8 @@
  * Keep wolfie_split.dtsi and the existing trackball/display files unchanged.
  * Cassini left thumbs (left to right): Alt / Win / Space / MO(1).
  * Right to left: MO(1) / Space / Win / Alt.
- * Mouse/Gaming layers preserve the original leftmost thumb gaming toggle.
+ * Mouse and Gaming share the same 36 main keys (user screenshot, November 2026).
+ * Both retain the proven eight-thumb configuration and EC11 push toggle.
  * Physical switch mapping must be confirmed on the keyboard after flashing.
  */
 
@@ -100,9 +101,9 @@
         layer_3 {
             display-name = "Mouse";
             bindings = <
-&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &none  &none
-&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &none  &none
-&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &none  &none
+&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp N1     &kp N2     &kp N3     &kp N4      &msc SCRL_UP    &kp BSPC
+&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &mkp LCLK  &mkp RCLK  &mkp MCLK  &msc SCRL_DOWN  &kp COMMA
+&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &mkp MB4   &mkp MB5   &kp PERIOD  &kp FSLH       &kp ESCAPE
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
                          &tog 5
             >;
@@ -112,9 +113,9 @@
         layer_4 {
             display-name = "Gaming";
             bindings = <
-&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &mkp LCLK  &mkp MB3  &mkp RCLK  &msc SCRL_UP    &kp NUMBER_1  &kp NUMBER_2
-&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &mkp MB4   &mkp MB5  &none      &msc SCRL_DOWN  &kp NUMBER_3  &kp NUMBER_4
-&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &none      &none     &none      &none           &kp N5        &kp NUMBER_6
+&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp N1     &kp N2     &kp N3     &kp N4      &msc SCRL_UP    &kp BSPC
+&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &mkp LCLK  &mkp RCLK  &mkp MCLK  &msc SCRL_DOWN  &kp COMMA
+&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &mkp MB4   &mkp MB5   &kp PERIOD  &kp FSLH       &kp ESCAPE
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
                          &tog 5
             >;
