@@ -101,9 +101,9 @@
         layer_3 {
             display-name = "Mouse";
             bindings = <
-&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp CAPS   &kp N1       &kp N2     &kp N3       &kp N4       &kp BSPC
-&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &msc SCRL_UP  &mkp LCLK &mkp RCLK   &mkp MCLK   &kp COMMA
-&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &msc SCRL_DOWN &mkp MB4 &mkp MB5    &kp FSLH     &kp ESCAPE
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T                                     &kp N1  &kp N2  &kp N3  &kp N4  &kp I  &kp BSPC
+&kp LEFT_SHIFT  &kp A  &kp S  &kp D  &kp F  &kp G                              &msc SCRL_UP  &mkp LCLK  &mkp RCLK  &mkp MCLK  &kp M  &kp COMMA
+&kp LEFT_CONTROL  &kp Z  &kp X  &kp C  &kp V  &kp B                            &msc SCRL_DOWN  &mkp MB4  &mkp MB5  &none  &kp CAPS  &kp ESCAPE
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &kp LALT
                          &tog 5
             >;
@@ -114,9 +114,9 @@
             display-name = "Gaming";
             bindings = <
 
-&kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp CAPS   &kp N1       &kp N2     &kp N3       &kp N4       &kp BSPC
-&kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &msc SCRL_UP  &mkp LCLK &mkp RCLK   &mkp MCLK   &kp COMMA
-&kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &msc SCRL_DOWN &mkp MB4 &mkp MB5    &kp FSLH     &kp ESCAPE
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T                                     &kp N1  &kp N2  &kp N3  &kp N4  &kp I  &kp BSPC
+&kp LEFT_SHIFT  &kp A  &kp S  &kp D  &kp F  &kp G                              &msc SCRL_UP  &mkp LCLK  &mkp RCLK  &mkp MCLK  &kp M  &kp COMMA
+&kp LEFT_CONTROL  &kp Z  &kp X  &kp C  &kp V  &kp B                            &msc SCRL_DOWN  &mkp MB4  &mkp MB5  &none  &kp CAPS  &kp ESCAPE
                          &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &kp LALT
                          &tog 5
             >;
