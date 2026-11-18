@@ -11,8 +11,8 @@
  *
  * Key positions: three rows of 12, eight thumbs, and EC11 push (45 total).
  * Keep wolfie_split.dtsi and the existing trackball/display files unchanged.
- * Cassini left thumbs (left to right): Win / Alt / Space / MO(1).
- * Right to left: MO(1) / Space / Win / Alt.
+ * Left thumbs (left to right): Win / MO(1) / Space / MO(3).
+ * Right thumbs (keymap order): Enter / MO(2) / MO(2) / Alt.
  * Mouse has its own revised 36-key layout; Gaming retains its previous mapping.
  * Both retain the proven eight-thumb configuration and EC11 push toggle.
  * Physical switch mapping must be confirmed on the keyboard after flashing.
@@ -60,7 +60,7 @@
 &kp TAB           &kp Q  &kp W  &kp E     &kp R  &kp T      &kp Y    &kp U  &kp I      &kp O       &kp P     &kp BSPC
 &kp LEFT_SHIFT    &kp A  &kp S  &kp D     &kp F  &kp G      &kp H    &kp J  &kp K      &kp L       &kp SEMI  &kp SQT
 &kp LEFT_CONTROL  &kp Z  &kp X  &kp C     &kp V  &kp B      &kp N    &kp M  &kp COMMA  &kp PERIOD  &kp FSLH  &kp ESCAPE
-                         &kp LGUI  &kp LALT  &kp SPACE  &mo 1  &kp RET  &mo 2  &mo 2   &mo 3
+                         &kp LGUI  &mo 1    &kp SPACE  &mo 3  &kp RET  &mo 2  &mo 2   &kp LALT
                          &tog 5
             >;
             sensor-bindings = <&cassini_scroll_vertical>;
@@ -104,7 +104,7 @@
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp CAPS   &kp N1       &kp N2     &kp N3       &kp N4       &kp BSPC
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &msc SCRL_UP  &mkp LCLK &mkp RCLK   &mkp MCLK   &kp COMMA
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &msc SCRL_DOWN &mkp MB4 &mkp MB5    &kp FSLH     &kp ESCAPE
-                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &kp LALT
                          &tog 5
             >;
             sensor-bindings = <&cassini_scroll_vertical>;
@@ -117,7 +117,7 @@
 &kp TAB           &kp Q  &kp W   &kp E     &kp R  &kp T      &kp CAPS   &kp N1       &kp N2     &kp N3       &kp N4       &kp BSPC
 &kp LEFT_SHIFT    &kp A  &kp S   &kp D     &kp F  &kp G      &kp I      &msc SCRL_UP  &mkp LCLK &mkp RCLK   &mkp MCLK   &kp COMMA
 &kp LEFT_CONTROL  &kp Z  &kp X   &kp C     &kp V  &kp B      &kp M      &msc SCRL_DOWN &mkp MB4 &mkp MB5    &kp FSLH     &kp ESCAPE
-                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &mo 3
+                         &tog 4  &trans  &trans  &trans  &kp RET    &mo 2     &mo 2   &kp LALT
                          &tog 5
             >;
             sensor-bindings = <&cassini_scroll_vertical>;
